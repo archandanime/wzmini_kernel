@@ -59,7 +59,7 @@ jobs:
           ln -s ${GITHUB_WORKSPACE}/br-cache $(ls -d output/buildroot-*)/dl
           make BOARD=${{matrix.platform}}_${{matrix.release}} br-source
 
-      - name: Build kernel
+      - name: Compile kernel
         run: |
           export GIT_HASH=$(git rev-parse --short ${GITHUB_SHA})
           export GIT_BRANCH=${GITHUB_REF_NAME}
@@ -79,6 +79,7 @@ jobs:
           
           echo KERNEL=${KERNEL} >> ${GITHUB_ENV}
 
+          TAG_NAME=${BUILD_TIMESTAMP}
       - name: Create release
         if: github.event_name != 'pull_request' && matrix.custom != 'onlyci'
         uses: softprops/action-gh-release@v1
