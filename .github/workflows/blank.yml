@@ -79,7 +79,7 @@ jobs:
           
           echo KERNEL=${KERNEL} >> ${GITHUB_ENV}
 
-      - name: Upload kernel
+      - name: Create release
         if: github.event_name != 'pull_request' && matrix.custom != 'onlyci'
         uses: softprops/action-gh-release@v1
         with:
