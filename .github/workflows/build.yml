@@ -63,13 +63,13 @@ jobs:
           ln -s /tmp/ccache ${HOME}/.ccache
           make BOARD=${{matrix.platform}}_ultimate_defconfig br-linux
           
-          BUILD_TIMESTAMP=$(date +%Y%m%d)
+          BUILD_TIMESTAMP=$(date +%Y-%m-%d)
           KERNEL=${GITHUB_WORKSPACE}/output/images/wzmini_${{matrix.platform}}_kernel.bin.${BUILD_TIMESTAMP}
           mv ${GITHUB_WORKSPACE}/output/images/uImage ${KERNEL}
           
           echo KERNEL=${KERNEL} >> ${GITHUB_ENV}
           echo TAG_NAME=${BUILD_TIMESTAMP} >> ${GITHUB_ENV}
-          
+
       - name: Create release
         if: github.event_name != 'pull_request' && matrix.custom != 'onlyci'
         uses: softprops/action-gh-release@v1
