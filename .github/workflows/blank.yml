@@ -1,4 +1,5 @@
 name: build
+
 on:
   pull_request:
     branches:
@@ -27,23 +28,6 @@ jobs:
           - ultimate
 
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v3
-
-      - name: Setup ccache
-        if: github.event_name != 'pull_request'
-        uses: actions/cache@v3
-        with:
-          path: /tmp/ccache
-          key: ${{matrix.platform}}_${{matrix.release}}
-
-      - name: Restore ccache
-        if: github.event_name == 'pull_request'
-        uses: actions/cache/restore@v3
-        with:
-          path: /tmp/ccache
-          key: ${{matrix.platform}}_${{matrix.release}}
-
       - name: Download OpenIPC firmware source
         run: |
           echo "8.8.8.8 invisible-mirror.net" | sudo tee -a /etc/hosts
@@ -80,6 +64,7 @@ jobs:
           echo KERNEL=${KERNEL} >> ${GITHUB_ENV}
 
           TAG_NAME=${BUILD_TIMESTAMP}
+
       - name: Create release
         if: github.event_name != 'pull_request' && matrix.custom != 'onlyci'
         uses: softprops/action-gh-release@v1
