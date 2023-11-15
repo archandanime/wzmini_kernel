@@ -61,11 +61,6 @@ jobs:
 
       - name: Compile kernel
         run: |
-          export GIT_HASH=$(git rev-parse --short ${GITHUB_SHA})
-          export GIT_BRANCH=${GITHUB_REF_NAME}
-          echo GIT_HASH=${GIT_HASH} >> ${GITHUB_ENV}
-          echo GIT_BRANCH=${GIT_BRANCH} >> ${GITHUB_ENV}
-
           mkdir -p /tmp/ccache
           ln -s /tmp/ccache ${HOME}/.ccache
           make BOARD=${{matrix.platform}}_ultimate_defconfig br-linux
