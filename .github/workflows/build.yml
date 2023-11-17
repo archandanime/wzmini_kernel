@@ -50,6 +50,7 @@ jobs:
         run: |
           git clone https://github.com/openipc/firmware
           mv firmware/* .
+          mv firmware/.* .
           rm -r firmware
 
       - name: Download OpenIPC br-cache
